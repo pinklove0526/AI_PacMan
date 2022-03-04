@@ -50,7 +50,7 @@ class SingleFoodSearchProblem(SearchProblem):
         pass
 
     def getStartState(self):
-        # TODO 1
+        # TODO 2
         pass
 
     def isGoalState(self, state):
