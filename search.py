@@ -158,7 +158,36 @@ def aStarSearch(problem, heuristic=nullHeuristic):
     return a path to the goal
     '''
     # TODO 22
+    startState = problem.getStartState()
+    # a * using priority queue so as to prioriize the successors with least
+    # heuristic cost
+    fringe = util.PriorityQueue()
+    visited = []
 
+    # the fringe apart from the state , action, cost also has combined cost 0 here
+    # of which is we want the least combined cost first
+    fringe.push((startState, [], 0), 0)
+
+    # keep popping till no more nodes in the fringe
+    while not fringe.isEmpty():
+        currentState, actions, costs = fringe.pop()
+        # curcial as this prevents expanding the same node twice
+        if not currentState in visited:
+            # update visited status
+            visited.append(currentState)
+            # if this goal state return the actions to reach it
+            if problem.isGoalState(currentState):
+                return actions
+            # push all successors not in visited
+            for state, action, cost in problem.getSuccessors(currentState):
+                if not state in visited:
+                    # update cost to reflect combined path and heuristic cost
+                    # and prioritize the least for popping as the priority queue
+                    # is implemeneted using heapq which pops smallest element
+                    # first and pushes such to maintain this order
+                    heuristicCost = costs + cost + heuristic(state, problem)
+                    fringe.push((state, actions + [action], costs + cost), heuristicCost)
+    util.raiseNotDefined()
 
 # Abbreviations
 bfs = breadthFirstSearch
