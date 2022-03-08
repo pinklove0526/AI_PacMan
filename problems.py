@@ -49,17 +49,21 @@ class SingleFoodSearchProblem(SearchProblem):
         # TODO 1
         pass
 
+
+
     def getStartState(self):
         # TODO 2
         pass
-
+        return self.getStartState()
     def isGoalState(self, state):
         # TODO 3
         pass
+        return state in self.isGoalState()
 
     def getSuccessors(self, state):
         # TODO 4
         pass
+        self.expanded_states.append()
 
     def getCostOfActions(self, actions):
         # TODO 5

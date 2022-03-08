@@ -21,7 +21,7 @@ def depthFirstSearch(problem):
     # states to be explored (LIFO). holds nodes in form (state, action)
     frontier = util.Stack()
     # previously explored states (for path checking), holds states
-    exploredNodes = []
+    explored = []
     # define start node
     startState = problem.getStartState()
     startNode = (startState, [])
@@ -32,9 +32,9 @@ def depthFirstSearch(problem):
         # begin exploring last (most-recently-pushed) node on frontier
         currentState, actions = frontier.pop()
 
-        if currentState not in exploredNodes:
+        if currentState not in explored:
             # mark current node as explored
-            exploredNodes.append(currentState)
+            explored.append(currentState)
 
             if problem.isGoalState(currentState):
                 return actions
@@ -60,7 +60,7 @@ def breadthFirstSearch(problem):
     frontier = util.Queue()
 
     # previously expanded states (for cycle checking), holds states
-    exploredNodes = []
+    explored = []
 
     startState = problem.getStartState()
     startNode = (startState, [], 0)  # (state, action, cost)
@@ -71,9 +71,9 @@ def breadthFirstSearch(problem):
         # begin exploring first (earliest-pushed) node on frontier
         currentState, actions, currentCost = frontier.pop()
 
-        if currentState not in exploredNodes:
+        if currentState not in explored:
             # put popped node state into explored list
-            exploredNodes.append(currentState)
+            explored.append(currentState)
 
             if problem.isGoalState(currentState):
                 return actions
@@ -143,6 +143,9 @@ def singleFoodSearchHeuristic(state, problem=None):
     """
     # TODO 20
     pass
+    x= state
+    y= problem.getStartState()
+
 
 
 def multiFoodSearchHeuristic(state, problem=None):
@@ -151,7 +154,17 @@ def multiFoodSearchHeuristic(state, problem=None):
     """
     # TODO 21
     pass
+def manhattanHeuristic(position, problem, info={}):
+    "The Manhattan distance heuristic for a PositionSearchProblem"
+    xy1 = position
+    xy2 = problem.goal
+    return abs(xy1[0] - xy2[0]) + abs(xy1[1] - xy2[1])
 
+def euclideanHeuristic(position, problem, info={}):
+    "The Euclidean distance heuristic for a PositionSearchProblem"
+    xy1 = position
+    xy2 = problem.goal
+    return ( (xy1[0] - xy2[0]) ** 2 + (xy1[1] - xy2[1]) ** 2 ) ** 0.5
 
 def aStarSearch(problem, heuristic=nullHeuristic):
     '''

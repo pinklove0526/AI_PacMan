@@ -83,32 +83,32 @@ class AStarFoodSearchAgent(SearchAgent):
         self.searchType = FoodSearchProblem
 
 
-def foodHeuristic(state, problem):
-    """Encourage Pacman to eat all the pellets as fast as possible."""
-    position, foodGrid = state
+    def foodHeuristic(state, problem):
+        """Encourage Pacman to eat all the pellets as fast as possible."""
+        position, foodGrid = state
 
-    heuristic = 0
-    foodList = foodGrid.asList()
+        heuristic = 0
+        foodList = foodGrid.asList()
 
-    # calculate the distance from current node to food-containing nodes
-    if len(foodList) > 0:
-        closestPoint = findClosestPoint(position, foodList)
-        farthestPoint = findFarthestPoint(position, foodList)
+        # calculate the distance from current node to food-containing nodes
+        if len(foodList) > 0:
+            closestPoint = findClosestPoint(position, foodList)
+            farthestPoint = findFarthestPoint(position, foodList)
 
-        closestPointIndex = closestPoint[0]
-        farthestPointIndex = farthestPoint[0]
+            closestPointIndex = closestPoint[0]
+            farthestPointIndex = farthestPoint[0]
 
-        currentNode = problem.startingGameState
-        closestFoodNode = foodList[closestPointIndex]
-        farthestFoodNode = foodList[farthestPointIndex]
+            currentNode = problem.startingGameState
+            closestFoodNode = foodList[closestPointIndex]
+            farthestFoodNode = foodList[farthestPointIndex]
 
-        # distance between current location and closest manhattan node
-        currentToClosest = mazeDistance(position, closestFoodNode, currentNode)
+            # distance between current location and closest manhattan node
+            currentToClosest = mazeDistance(position, closestFoodNode, currentNode)
 
-        # distance between closest manhattan node and farthest manhattan node
-        closestToFarthest = mazeDistance(closestFoodNode, farthestFoodNode, currentNode)
+            # distance between closest manhattan node and farthest manhattan node
+            closestToFarthest = mazeDistance(closestFoodNode, farthestFoodNode, currentNode)
 
-        heuristic = currentToClosest + closestToFarthest
+            heuristic = currentToClosest + closestToFarthest
 
-    return heuristic
+        return heuristic
 
