@@ -112,53 +112,46 @@ class FoodSearchProblem:
 class BFSFoodSearchAgent(SearchAgent):
     # TODO 13
     pass
+    def __init__(self, fn='breadthFirstSearch', prob='FoodSearchProblem', heuristic='nullHeuristic'):
+        SearchAgent.__init__(self, fn, prob, heuristic)
 
 
 class DFSFoodSearchAgent(SearchAgent):
     # TODO 14
     pass
+    def __init__(self, fn='depthFirstSearch', prob='FoodSearchProblem', heuristic='nullHeuristic'):
+        SearchAgent.__init__(self, fn, prob, heuristic)
 
 
 class UCSFoodSearchAgent(SearchAgent):
     # TODO 15
     pass
+    def __init__(self, fn='uniformCostSearch', prob='FoodSearchProblem', heuristic='nullHeuristic'):
+        SearchAgent.__init__(self, fn, prob, heuristic)
 
 
 class AStarFoodSearchAgent(SearchAgent):
     # TODO 16
     pass
 
-    def __init__(self):
-        self.searchFunction = lambda prob: search.aStarSearch(prob, foodHeuristic)
-        self.searchType = FoodSearchProblem
-
+    def __init__(self, fn='aStarSearch', prob='FoodSearchProblem', heuristic='nullHeuristic'):
+        SearchAgent.__init__(self, fn, prob, heuristic)
 
     def foodHeuristic(state, problem):
-        """Encourage Pacman to eat all the pellets as fast as possible."""
+        # TODO
         position, foodGrid = state
+        return len(foodGrid.asList())
 
-        heuristic = 0
-        foodList = foodGrid.asList()
+        foodToEat = foodGrid.asList()
+        totalCost = 0
+        curPoint = position
+        while foodToEat:
+            heuristic_cost, food = \
+                min([(util.manhattanDistance(curPoint, food), food) for food in foodToEat])
+            foodToEat.remove(food)
+            curPoint = food
+            totalCost += heuristic_cost
 
-        # calculate the distance from current node to food-containing nodes
-        if len(foodList) > 0:
-            closestPoint = findClosestPoint(position, foodList)
-            farthestPoint = findFarthestPoint(position, foodList)
-
-            closestPointIndex = closestPoint[0]
-            farthestPointIndex = farthestPoint[0]
-
-            currentNode = problem.startingGameState
-            closestFoodNode = foodList[closestPointIndex]
-            farthestFoodNode = foodList[farthestPointIndex]
-
-            # distance between current location and closest manhattan node
-            currentToClosest = mazeDistance(position, closestFoodNode, currentNode)
-
-            # distance between closest manhattan node and farthest manhattan node
-            closestToFarthest = mazeDistance(closestFoodNode, farthestFoodNode, currentNode)
-
-            heuristic = currentToClosest + closestToFarthest
-
-        return heuristic
+        return totalCost
+        pass
 
