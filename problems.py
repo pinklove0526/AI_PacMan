@@ -1,5 +1,6 @@
 import util
-
+import pacman as pacMan
+from week5Midterm.pacman.AI_PacMan.pacman import GameState 
 
 class SearchProblem:
     """
@@ -47,6 +48,12 @@ class SearchProblem:
 class SingleFoodSearchProblem(SearchProblem):
     def __init__(self, startingGameState):
         # TODO 1
+        self.startState = startingGameState
+        self.seq = [] #sequence of actions
+        self.wallState = GameState.getWalls(self) #state: wall around pacman
+        self.pacmanPos = GameState.getPacmanPosition(self) 
+        self.goal = GameState.getFood(self)
+        self.problem = (GameState.getPacmanPosition == GameState.isWin()) 
         pass
 
 
