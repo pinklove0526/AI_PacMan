@@ -47,13 +47,13 @@ class SearchProblem:
 class SingleFoodSearchProblem(SearchProblem):
     def __init__(self, startingGameState):
         # TODO 1
-        pass
-
-
+        self.getWall = None
 
     def getStartState(self):
         # TODO 2
         pass
+
+        self.getWall
         return self.getStartState()
     def isGoalState(self, state):
         # TODO 3
